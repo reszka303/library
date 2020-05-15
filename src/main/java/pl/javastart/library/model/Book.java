@@ -12,7 +12,6 @@ public class Book {
          int pages, String publisher, String isbn) {
         this(title, author, releaseDate, pages, publisher);
         this.isbn = isbn;
-        System.out.println("Constructor 1");
     }
 
     public Book(String title, String author, int releaseDate, int pages, String publisher) {
@@ -21,7 +20,6 @@ public class Book {
         this.releaseDate = releaseDate;
         this.pages = pages;
         this.publisher = publisher;
-        System.out.println("Constructor 2");
     }
 
     public String getTitle() {

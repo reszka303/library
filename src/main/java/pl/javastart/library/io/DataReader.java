@@ -1,4 +1,4 @@
-package pl.javastart.io;
+package pl.javastart.library.io;
 
 import pl.javastart.library.model.Book;
 
@@ -9,6 +9,12 @@ public class DataReader {
 
     public void close() {
         scanner.close();
+    }
+
+    public int getInt() {
+        int number = scanner.nextInt();
+        scanner.nextLine();
+        return number;
     }
 
     public Book readAndCreateBook() {

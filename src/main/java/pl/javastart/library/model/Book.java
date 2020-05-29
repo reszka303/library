@@ -7,9 +7,7 @@ public class Book extends Publication {
 
     public Book(String title, String author, int year, int pages, String publisher,
                 String isbn) {
-        setTitle(title);
-        setPublisher(publisher);
-        setYear(year);
+        super(title, publisher, year);
         this.pages = pages;
         this.author = author;
         this.isbn = isbn;
@@ -40,6 +38,7 @@ public class Book extends Publication {
         this.author = author;
     }
 
+    @Override
     public void printInfo() {
         String info = getTitle() + "; " + author + "; " + getYear() + "; "
                 + pages + "; " + getPublisher() + "; " + isbn;

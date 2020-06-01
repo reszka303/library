@@ -5,23 +5,17 @@ import pl.javastart.library.model.Book;
 import pl.javastart.library.model.Library;
 import pl.javastart.library.model.Magazine;
 
-public class LibraryControl {
-    private static final int EXIT = 0;
-    private static final int ADD_BOOK = 1;
-    private static final int ADD_MAGAZINE = 2;
-    private static final int PRINT_BOOKS = 3;
-    private static final int PRINT_MAGAZINES = 4;
-
+class LibraryControl {
     private DataReader dataReader = new DataReader();
 
     private Library library = new Library();
 
-    public void controlLoop() {
-        int option;
+    void controlLoop() {
+        Option option;
 
         do {
             printOptions();
-            option = dataReader.getInt();
+            option = Option.createFromInt(dataReader.getInt());
             switch (option) {
                 case ADD_BOOK:
                     addBook();
@@ -41,16 +35,14 @@ public class LibraryControl {
                 default:
                     System.out.println("There is no such option, please enter again: ");
             }
-        } while (option != EXIT);
+        } while (option != Option.EXIT);
     }
 
     private void printOptions() {
         System.out.println("Choose an option: ");
-        System.out.println(EXIT + " - exit the program");
-        System.out.println(ADD_BOOK + " - adding a new book");
-        System.out.println(ADD_MAGAZINE + " - adding a new magazine");
-        System.out.println(PRINT_BOOKS + " - view available books");
-        System.out.println(PRINT_MAGAZINES + " - view available magazines");
+        for (Option option : Option.values()) {
+            System.out.println(option);
+        }
     }
 
     private void addBook() {
@@ -72,7 +64,8 @@ public class LibraryControl {
     }
 
     private void exit() {
-        System.out.println("End of program, bye bye!");
+        System.out.println("Koniec programu, papa!");
+        // zamykamy strumień wejścia
         dataReader.close();
     }
 }

@@ -1,12 +1,18 @@
 package pl.javastart.library.app;
 
+import pl.javastart.library.exception.NoSuchOptionException;
+import pl.javastart.library.io.ConsolePrinter;
 import pl.javastart.library.io.DataReader;
 import pl.javastart.library.model.Book;
 import pl.javastart.library.model.Library;
 import pl.javastart.library.model.Magazine;
+import pl.javastart.library.model.Publication;
+
+import java.util.InputMismatchException;
 
 class LibraryControl {
-    private DataReader dataReader = new DataReader();
+    private ConsolePrinter printer = new ConsolePrinter();
+    private DataReader dataReader = new DataReader(printer);
 
     private Library library = new Library();
 
@@ -15,7 +21,7 @@ class LibraryControl {
 
         do {
             printOptions();
-            option = Option.createFromInt(dataReader.getInt());
+            option = getOption();
             switch (option) {
                 case ADD_BOOK:
                     addBook();
@@ -33,39 +39,69 @@ class LibraryControl {
                     exit();
                     break;
                 default:
-                    System.out.println("There is no such option, please enter again: ");
+                    printer.printLine("There is no such option, please enter again: ");
             }
         } while (option != Option.EXIT);
     }
 
+    private Option getOption() {
+        boolean optionOk = false;
+        Option option = null;
+        while (!optionOk) {
+            try {
+                option = Option.createFromInt(dataReader.getInt());
+                optionOk = true;
+            } catch (NoSuchOptionException e) {
+                printer.printLine(e.getMessage() + ", provide again:");
+            } catch (InputMismatchException ignored) {
+                printer.printLine("You entered a value that is not a number, please enter again:");
+            }
+        }
+
+        return option;
+    }
+
     private void printOptions() {
-        System.out.println("Choose an option: ");
+        printer.printLine("Choose an option: ");
         for (Option option : Option.values()) {
-            System.out.println(option);
+            printer.printLine(option.toString());
         }
     }
 
     private void addBook() {
-        Book book = dataReader.readAndCreateBook();
-        library.addBook(book);
+        try {
+            Book book = dataReader.readAndCreateBook();
+            library.addBook(book);
+        } catch (InputMismatchException e) {
+            printer.printLine("Failed to create book, invalid data");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printer.printLine("Capacity limit reached, no more book can be added");
+        }
     }
 
     private void printBooks() {
-        library.printBooks();
+        Publication[] publications = library.getPublications();
+        printer.printBooks(publications);
     }
 
     private void addMagazine() {
-        Magazine magazine = dataReader.readAndCreateMagazine();
-        library.addMagazine(magazine);
+        try {
+            Magazine magazine = dataReader.readAndCreateMagazine();
+            library.addMagazine(magazine);
+        } catch (InputMismatchException e) {
+            printer.printLine("Failed to create storage, invalid data");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printer.printLine("Capacity limit reached, no more storage can be added");
+        }
     }
 
     private void printMagazines() {
-        library.printMagazines();
+        Publication[] publications = library.getPublications();
+        printer.printMagazines(publications);
     }
 
     private void exit() {
-        System.out.println("Koniec programu, papa!");
-        // zamykamy strumień wejścia
+        printer.printLine("End of program, bye!");
         dataReader.close();
     }
 }

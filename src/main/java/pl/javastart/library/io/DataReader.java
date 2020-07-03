@@ -25,35 +25,39 @@ public class DataReader {
         }
     }
 
+    public String getString() {
+        return sc.nextLine();
+    }
+
     public Book readAndCreateBook() {
-        printer.printLine("Title: ");
+        printer.printLine("Tytuł: ");
         String title = sc.nextLine();
-        printer.printLine("Author: ");
+        printer.printLine("Autor: ");
         String author = sc.nextLine();
-        printer.printLine("Publishing house: ");
+        printer.printLine("Wydawnictwo: ");
         String publisher = sc.nextLine();
         printer.printLine("ISBN: ");
         String isbn = sc.nextLine();
-        printer.printLine("The year of publishment: ");
+        printer.printLine("Rok wydania: ");
         int releaseDate = getInt();
-        printer.printLine("Number of pages: ");
+        printer.printLine("Ilość stron: ");
         int pages = getInt();
 
         return new Book(title, author, releaseDate, pages, publisher, isbn);
     }
 
     public Magazine readAndCreateMagazine() {
-        printer.printLine("Title: ");
+        printer.printLine("Tytuł: ");
         String title = sc.nextLine();
-        printer.printLine("Publishing house: ");
+        printer.printLine("Wydawnictwo: ");
         String publisher = sc.nextLine();
-        printer.printLine("Language: ");
+        printer.printLine("Język: ");
         String language = sc.nextLine();
-        printer.printLine("The year of publishment: ");
+        printer.printLine("Rok wydania: ");
         int year = getInt();
-        printer.printLine("Month: ");
+        printer.printLine("Miesiąc: ");
         int month = getInt();
-        printer.printLine("Day: ");
+        printer.printLine("Dzień: ");
         int day = getInt();
 
         return new Magazine(title, publisher, language, year, month, day);

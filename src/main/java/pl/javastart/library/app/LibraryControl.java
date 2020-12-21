@@ -5,7 +5,10 @@ import pl.javastart.library.io.ConsolePrinter;
 import pl.javastart.library.io.DataReader;
 import pl.javastart.library.io.file.FileManager;
 import pl.javastart.library.io.file.FileManagerBuilder;
-import pl.javastart.library.model.*;
+import pl.javastart.library.model.Book;
+import pl.javastart.library.model.Library;
+import pl.javastart.library.model.LibraryUser;
+import pl.javastart.library.model.Magazine;
 
 import java.util.InputMismatchException;
 

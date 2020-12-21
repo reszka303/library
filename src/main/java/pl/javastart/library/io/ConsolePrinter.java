@@ -35,9 +35,13 @@ public class ConsolePrinter {
     }
 
     public void printUsers(Collection<LibraryUser> users) {
+        int counter = 0;
         for (LibraryUser user : users) {
             printLine(user.toString());
+            counter++;
         }
+        if (counter == 0)
+            printLine("Brak użytkowników w bibliotece");
     }
 
     public void printLine(String text) {

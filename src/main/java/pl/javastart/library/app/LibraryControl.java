@@ -56,10 +56,10 @@ class LibraryControl {
                 case DELETE_MAGAZINE:
                     deleteMagazine();
                     break;
-                case ADD_USER: //dodano
+                case ADD_USER:
                     addUser();
                     break;
-                case PRINT_USERS: //dodano
+                case PRINT_USERS:
                     printUsers();
                     break;
                 case EXIT:
@@ -117,7 +117,6 @@ class LibraryControl {
         }
     }
 
-    //dodano
     private void addUser() {
         LibraryUser libraryUser = dataReader.createLibraryUser();
         try {
@@ -127,19 +126,22 @@ class LibraryControl {
         }
     }
 
-    //zmiana logiki
     private void printBooks() {
-        printer.printBooks(library.getPublications().values());
+        printer.printBooks(library.getSortedPublications(
+                (p1, p2) -> p1.getTitle().compareToIgnoreCase(p2.getTitle())
+        ));
     }
 
-    //zmiana logiki
     private void printMagazines() {
-        printer.printMagazines(library.getPublications().values());
+        printer.printMagazines(library.getSortedPublications(
+                (p1, p2) -> p1.getTitle().compareToIgnoreCase(p2.getTitle())
+        ));
     }
 
-    //dodano
     private void printUsers() {
-        printer.printUsers(library.getUsers().values());
+        printer.printUsers(library.getSortedUsers(
+                (p1, p2) -> p1.getLastName().compareToIgnoreCase(p2.getLastName())
+        ));
     }
 
     private void deleteMagazine() {
@@ -185,8 +187,8 @@ class LibraryControl {
         PRINT_MAGAZINES(4, "Wyświetlenie dostępnych magazynów/gazet"),
         DELETE_BOOK(5, "Usuń książkę"),
         DELETE_MAGAZINE(6, "Usuń magazyn"),
-        ADD_USER(7, "Dodaj czytelnika"), //dodano
-        PRINT_USERS(8, "Wyświetl czytelników"); //dodano
+        ADD_USER(7, "Dodaj czytelnika"),
+        PRINT_USERS(8, "Wyświetl czytelników");
 
         private int value;
         private String description;
